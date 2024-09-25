@@ -1,0 +1,28 @@
+#gridFrame {
+background-color:lightsteelblue;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: center;   
+}
+
+.cell {
+    width: 25px;
+    height: 25px;
+    margin: 2px;
+}
+
+.defaultColor {
+    background-color: cornsilk;
+}
+
+.highlightColor {   
+    background-color: gray;
+}

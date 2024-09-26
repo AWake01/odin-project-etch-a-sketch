@@ -1,8 +1,10 @@
 const gridSizePx = 700;
 const rows = 16;
 const columns = 16;
+let gridSize = 16;
 
 const gridFrame = document.getElementById("gridFrame");
+const sizeBtn = document.getElementById("sizeBtn");
 
 function generateGrid(rowCount, colCount) {
     for(let y = 0; y < colCount; y++){
@@ -19,6 +21,8 @@ function generateGrid(rowCount, colCount) {
         }
         gridFrame.appendChild(row);
     }
+
+    sizeBtn.innerText = `Grid Size: ${gridSize} x ${gridSize}`;
 }
 
 document.addEventListener("mouseover", (e) => {
@@ -32,22 +36,31 @@ document.addEventListener("mouseover", (e) => {
 }) 
 
 document.addEventListener("click", (e) => {
-    const target = e.target;
-    //console.log(target);
+    let target = e.target;
+    //console.log(target.id);
 
-    let gridSize = 0;
-    do{
-        gridSize = prompt("Enter the grid size (1 to 100):", "16");
-    }while(gridSize < 1 || gridSize > 100 || isNaN(gridSize));
-    
-    if(gridSize) {  //Prompt OK
-        //gridFrame.innerHTML = "";    //Remove all gridFrame children. Alt: generateGrid(gridSize, gridSize)
-        gridFrame.replaceChildren();
-        console.log(gridSize);
-        generateGrid(gridSize, gridSize);
-    } else {return} //Prompt CANCEL
+    switch(target.id) {
+        //Prompt user for a grid size and generate new grid
+        case 'sizeBtn':
+            while(true) {   //Prompt till input between 1 and 100
+                gridSize = prompt("Enter the grid size (1 to 100):", "16");
+                if(gridSize != null){   //Prompt OK
+                    if(gridSize < 1 || gridSize > 100 || isNaN(gridSize)) { //If input invalid, repeat prompt
+                        continue;
+                    }
+                    else {  //If input valid, generate new grid
+                        gridFrame.replaceChildren();    //Clear grid
+                        generateGrid(gridSize, gridSize)
+                        return;       
+                    }
+                }
+                else { return; } //Prompt CANCEL
+            }
+            break;
+        //Default click
+        default:
+            return;
+    }
 }) 
 
-//MAIN SCRIPT
-/////////////
-generateGrid(rows, columns);
+document.onload(generateGrid(gridSize, gridSize));  //Load inital grid

@@ -1,22 +1,40 @@
-#gridFrame {
-background-color:lightsteelblue;
-
+body {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
+#sizeBtn {
+    text-align: center;
+    font-size: 68px;
+}
+
+#gridFrame {
+background-color:lightsteelblue;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+    flex-wrap: nowrap;
+ 
+    width: 700px;
+    height: 700px;
+    gap: 1px;
+}
+
 .row {
     display: flex;
-    align-items: center;
+    align-items: stretch;
+    flex-grow: 1;
     justify-content: center;   
+    flex-wrap: nowrap;
+    gap: 1px;
 }
 
 .cell {
-    width: 25px;
-    height: 25px;
-    margin: 2px;
+    flex-grow: 1;
 }
 
 .defaultColor {

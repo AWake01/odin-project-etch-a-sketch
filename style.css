@@ -3,15 +3,54 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 10px;
+
+    background-color: #ff5e5b;
+}
+
+h1 {
+    margin: 0;
+}
+
+button {
+    background-color: #ffed66;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px black;
+
+    font-size: 16px;
+    font-weight: bold;
+
+}
+
+#gridOptions {
+     display: flex;
+     gap: 10px;
+}
+
+#colorOptions {
+    display: flex;
+    gap: 10px;
+}
+
+#colorPicker {
+    box-shadow: 1px 1px 1px black;
+}
+
+#btnFrame {
+    display: flex;
+    width: 600px;
+
+    justify-content: space-between;
+    gap: 5px;
 }
 
 #sizeBtn {
     text-align: center;
-    font-size: 68px;
 }
 
 #gridFrame {
-background-color:lightsteelblue;
+    background-color:aliceblue;
 
     display: flex;
     flex-direction: column;
@@ -19,9 +58,13 @@ background-color:lightsteelblue;
     justify-content: stretch;
     flex-wrap: nowrap;
  
-    width: 700px;
-    height: 700px;
-    gap: 1px;
+    width: 600px;
+    height: 600px;
+    gap: 1px;       /*Cell gap*/
+    padding: 10px;  /*Border gap*/
+
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px black;
 }
 
 .row {
@@ -35,12 +78,23 @@ background-color:lightsteelblue;
 
 .cell {
     flex-grow: 1;
+    border-radius: 10%;
 }
 
 .defaultColor {
-    background-color: cornsilk;
+    background-color:aliceblue;
 }
 
 .highlightColor {   
     background-color: gray;
+}
+
+.grayscaleColor {   
+    background-color: gray;
+    opacity: 0.1;
+}
+
+.btnSelected {
+    background-color:dodgerblue;
+    opacity: 0.5;
 }

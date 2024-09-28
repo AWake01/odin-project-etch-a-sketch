@@ -1,10 +1,16 @@
 const gridSizePx = 700;
-const rows = 16;
-const columns = 16;
-let gridSize = 16;
+let gridSize = 16;  //Square grid
 
 const gridFrame = document.getElementById("gridFrame");
 const sizeBtn = document.getElementById("sizeBtn");
+const modeBtn = document.getElementById("modeBtn");
+const resetColorBtn = document.getElementById("resetColorBtn");
+const colorPicker = document.getElementById("colorPicker");
+let colorMode = "solid";       //solid, rainbow, shade
+modeBtn.innerText = "Solid Mode";
+colorPicker.value = "#808080";  //Grey
+
+
 
 function generateGrid(rowCount, colCount) {
     for(let y = 0; y < colCount; y++){
@@ -15,8 +21,6 @@ function generateGrid(rowCount, colCount) {
             const cell = document.createElement("div");
             cell.classList.add("cell");
             cell.classList.add("defaultColor");
-            //cell.style.width = `${gridSizePx}px`;
-            //cell.style.height = `${gridSizePx}px`;
             row.appendChild(cell);
         }
         gridFrame.appendChild(row);
@@ -30,10 +34,49 @@ document.addEventListener("mouseover", (e) => {
     //console.log(target);
 
     if(target.classList.contains("cell")) {
-            target.classList.remove("defaultColor");
-            target.classList.add("highlightColor");
+
+        switch(colorMode) {
+
+            case "solid":
+                if(target.classList.contains("defaultColor")){
+                    target.classList.remove("defaultColor");
+                    //target.classList.add("highlightColor");
+                    target.style.backgroundColor = document.getElementById("colorPicker").value;
+                }
+                break;
+            case "rainbow":
+                if(target.classList.contains("defaultColor")){
+                    target.classList.remove("defaultColor");
+                    let color = randomColor();
+                    target.style.backgroundColor = `rgb(${color[0]}, ${color[1]},  ${color[2]})`;
+                }
+                break;
+            case "shade":
+                if(target.classList.contains("defaultColor")){
+                    target.classList.remove("defaultColor");
+                    //target.classList.add("grayscaleColor");
+                    target.style.backgroundColor = document.getElementById("colorPicker").value;
+                    target.style.opacity = "0.1";
+                }
+                //else if(target.classList.contains("grayscaleColor") && parseFloat(target.style.opacity) < 1) {
+                else if(parseFloat(target.style.opacity) < 1) {
+                    let opacity = parseFloat(target.style.opacity);
+                    opacity += 0.1;
+                    target.style.opacity = `${opacity}`;
+                    console.log("Opacity: " + opacity);
+                }
+                break;
+        }
     }
 }) 
+
+function randomColor(element) {
+    let red = Math.floor(Math.random() * 255);
+    let green = Math.floor(Math.random() * 255);
+    let blue = Math.floor(Math.random() * 255);
+
+    return [red, green, blue];
+}
 
 document.addEventListener("click", (e) => {
     let target = e.target;
@@ -57,6 +100,41 @@ document.addEventListener("click", (e) => {
                 else { return; } //Prompt CANCEL
             }
             break;
+        //Color mode toggle - solid > shade > rainbow
+        case 'modeBtn':
+            console.log("Mode: ", colorMode);
+            if(colorMode === "solid") {
+                colorMode = "shade";
+                modeBtn.innerText="Shade Mode";
+                colorPicker.disabled = false;
+                resetColorBtn.disabled = false;
+            }
+            else if(colorMode === "shade") {
+                colorMode = "rainbow";
+                modeBtn.innerText="Rainbow Mode";
+                colorPicker.disabled = true;
+                resetColorBtn.disabled = true;
+            }
+            else {
+                colorMode = "solid";
+                modeBtn.innerText="Solid Mode"; 
+                colorPicker.disabled = false;  
+                resetColorBtn.disabled = false;
+            }
+            console.log("Mode: ", colorMode);
+            break;
+
+        //Default color
+        case 'resetColorBtn':
+            colorPicker.value = "#808080";
+            break;
+
+        //Erase grid
+        case 'clearBtn':
+            gridFrame.replaceChildren();
+            generateGrid(gridSize, gridSize);
+            break;
+
         //Default click
         default:
             return;
